@@ -21,7 +21,8 @@ rpm-ostree install firefox
 
 bash -c 'echo "X-GNOME-Autostart-enabled=false" >> /etc/xdg/autostart/gnome-initial-setup-first-login.desktop'
 
-useradd student -p student
+useradd student -p please@1234
+echo please@1234 | passwd student --stdin
 
 # cat <<EOF > /home/student/.local/bin/gnome-kiosk-script
 # #!/bin/sh
@@ -35,8 +36,8 @@ useradd student -p student
 # exec "$0" "$@"
 # EOF
 
-mkdir -p /home/student/.config/autostart
-cat <<EOF > /home/student/.config/autostart/firefox.desktop
+mkdir -p /var/home/student/.config/autostart
+cat <<EOF > /var/home/student/.config/autostart/firefox.desktop
 [Desktop Entry]
 Version=1.0
 Name=Firefox
@@ -55,5 +56,4 @@ X-Desktop-File-Install-Version=0.27
 EOF
 
 #### Example for enabling a System Unit File
-
 # systemctl enable podman.socket
