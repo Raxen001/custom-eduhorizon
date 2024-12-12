@@ -37,28 +37,48 @@ RELEASE="$(rpm -E %fedora)"
 # su -l student -c "mkdir -p /var/home/student/Downloads"
 # su -l student -c "mkdir -p /var/home/student/.config"
 # su -l student -c "mkdir -p /var/home/student/.config/autostart"
-# cat <<EOF > /var/home/student/.config/autostart/firefox.desktop
-# [Desktop Entry]
-# Version=1.0
-# Name=Firefox
-# GenericName=Web Browser
-# Comment=Browse the Web
-# # Exec=firefox %u
-# Exec=firefox https://legion.tailaadcc.ts.net/
-# Icon=firefox
-# Terminal=false
-# Type=Application
-# MimeType=text/html;text/xml;application/xhtml+xml;application/vnd.mozilla.xul+xml;text/mml;x-scheme-handler/http;x-scheme-handler/https;
-# StartupNotify=true
-# Categories=Network;WebBrowser;
-# Keywords=web;browser;internet;
-# X-Desktop-File-Install-Version=0.27
-# EOF
+cat <<EOF > /usr/share/applications/eduhorizon.desktop
+[Desktop Entry]
+Version=1.0
+Name=EduHorizon
+GenericName=Learning Management System
+Comment=Learn new things
+# Exec=firefox %u
+Exec=firefox --kiosk https://legion.tailaadcc.ts.net/
+Icon=book
+Terminal=false
+Type=Application
+MimeType=text/html;text/xml;application/xhtml+xml;application/vnd.mozilla.xul+xml;text/mml;x-scheme-handler/http;x-scheme-handler/https;
+StartupNotify=true
+Categories=Network;WebBrowser;
+Keywords=web;browser;internet;
+X-Desktop-File-Install-Version=0.27
+EOF
 #
+cat <<EOF > /usr/share/applications/books.desktop
+[Desktop Entry]
+Name=Books
+Comment=Books Folder
+# Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+Keywords=folder;manager;explore;disk;filesystem;nautilus;
+Exec=nautilus --new-window /usr/share/doc/books/
+# Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+Icon=ebook-reader
+Terminal=false
+Type=Application
+DBusActivatable=true
+StartupNotify=true
+X-GNOME-UsesNotifications=true
+X-Purism-FormFactor=Workstation;Mobile;
+EOF
 # this installs a package from fedora repos
+mkdir -p /usr/share/doc/books/
 wget "https://ncert.nic.in/textbook/pdf/aemr1dd.zip"
-mv aemr1dd.zip /usr/share/doc/book1.zip
-rpm-ostree install firefox chromium
+mv aemr1dd.zip /usr/share/doc/books/book1.zip
+
+rpm-ostree install flatpak firefox chromium libreoffice neovim
+# flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
 # this would install a package from rpmfusion
 # rpm-ostree install codium
 # install gnome kiosk
