@@ -56,6 +56,8 @@ RELEASE="$(rpm -E %fedora)"
 # EOF
 #
 # this installs a package from fedora repos
+wget "https://ncert.nic.in/textbook/pdf/aemr1dd.zip"
+mv aemr1dd.zip /usr/share/doc/book1.zip
 rpm-ostree install firefox chromium
 # this would install a package from rpmfusion
 # rpm-ostree install codium
